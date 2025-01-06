@@ -10,14 +10,13 @@ function Header(){
             <button className={styles['home-button']}></button>
             
             <div className={styles['search-container']}>
-                <span className="material-symbols-outlined" 
-                style={{ fontSize: '24px', marginRight: '10px' }}>
-                 search
-                </span>
                 <input type="search" className={styles['search-input']} placeholder="Enter a team...">
                 </input>
+                <span className="material-symbols-outlined" 
+                style={{ fontSize: '2.5vw', right: 0}}>
+                 search
+                </span>
             </div>
-
         </div>
         </>
 
