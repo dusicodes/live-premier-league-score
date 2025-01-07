@@ -27,6 +27,26 @@ body{
   width: 12vw;
   height: 100%;
   aspect-ratio: 1;
+}
+
+.account-button{
+  background-image: url('../assets/profile.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+  transform: scale(1.5); 
+  position: absolute; 
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  margin-right: 10vw;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
 
 }
 
@@ -65,7 +85,7 @@ body{
 }
 
 .search-input {
-  font-size: 2vw;
+  font-size: 1vw;
   font-family: 'Lexend', sans-serif;
   color: #333333;
   outline: none;

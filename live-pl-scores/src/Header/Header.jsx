@@ -5,8 +5,8 @@ function Header(){
     return(
 
         <>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
-        <div className={styles['header-bar']}>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=block" />
+            <div className={styles['header-bar']}>
             <button className={styles['home-button']}></button>
             
             <div className={styles['search-container']}>
@@ -17,6 +17,8 @@ function Header(){
                  search
                 </span>
             </div>
+            <button class={styles["account-button"]}></button>
+
         </div>
         </>
 
