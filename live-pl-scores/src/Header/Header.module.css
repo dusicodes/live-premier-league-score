@@ -35,19 +35,12 @@ body{
   background-repeat: no-repeat;
   background-size: contain;
   background-color: transparent;
-  transform: scale(1.5); 
-  position: absolute; 
-  right: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 3rem;
   border: none;
-  display: flex;
-  margin-right: 10vw;
   cursor: pointer;
-  justify-content: center;
-  align-items: center;
-
+  margin-left: 4vw;
 }
 
 .search-container {
@@ -85,7 +78,7 @@ body{
 }
 
 .search-input {
-  font-size: 1vw;
+  font-size: 1rem;
   font-family: 'Lexend', sans-serif;
   color: #333333;
   outline: none;
@@ -98,4 +91,29 @@ body{
 
 .search-input::placeholder {
   color: rgba(0, 0, 0, 0.25);
+}
+
+.navbar{
+  margin-left: 4vw;
+}
+
+.navbar ul{
+  list-style-type: none;
+  background-color: transparent;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.navbar a{
+  color: white;
+  text-decoration: none;
+  font-size: 1.3rem;
+  padding: 1vw;
+  display: block;
+  text-align: center;
+}
+
+.navbar li{
+  float: left;
 }

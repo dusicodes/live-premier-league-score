@@ -17,7 +17,17 @@ function Header(){
                  search
                 </span>
             </div>
-            <button class={styles["account-button"]}></button>
+
+            <nav className={styles['navbar']}>
+                <ul>
+                    <li><a href="">Scores & Fixtures</a></li>
+                    <li><a href="">Table</a></li>
+                    <li><a href="">Top Scorers</a></li>
+                    <li><a href="">News</a></li>
+                </ul>
+            </nav>
+
+            <button className={styles["account-button"]}></button>
 
         </div>
         </>

@@ -1,7 +1,7 @@
 
 import styles from './Score.module.css';
 
-function Score() {
+function Score(props) {
     return (
         <div className={styles.card}>
             <div data-status="inprogress" className={styles.teams}>
