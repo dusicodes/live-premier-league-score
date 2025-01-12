@@ -1,0 +1,83 @@
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+.date-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Arrow buttons */
+  .arrow-left, .arrow-right {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+  
+  .arrow:hover {
+    background-color: #ccc;
+  }
+  
+  /* Dates container */
+  .dates {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Individual date item */
+  .date-item {
+    text-align: center;
+    padding: 10px;
+    width: 40px;
+    background-color: hsla(0, 0%, 0%, 0);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .date-item button{
+    all: unset;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .date-item span:first-child {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .date-item span:last-child {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .date-item:hover {
+    background-color: hsl(213, 91%, 42%);  
+    color: white;
+}
+  
+  /* Highlight the "Today" date */
+  .current-selection {
+    background-color: #1692f8;
+    color: white;
+  }
+  
+  .current-selection:hover {
+    background-color: hsl(213, 91%, 42%);
+  }
