@@ -8,7 +8,7 @@ function ScoreBlock({day, month, year, scheduledGames, liveGames, allGames}){
 
     let gameDictionary = new Map();
     const [formattedDate, setFormattedDate] = useState('');
-    const [gamesForDate, setGamesForDate] = useState([]);
+    const [gamesForDate, setGamesForDate] = useState(new Map());
     
     mapMatches();
     useEffect(() => {
@@ -16,35 +16,52 @@ function ScoreBlock({day, month, year, scheduledGames, liveGames, allGames}){
           const formatted = formatDate(day, month, year);
           setFormattedDate(formatted);
         }
-        console.log(scheduledGames);
-        console.log(liveGames);
+        // console.log(scheduledGames);
+        // console.log(liveGames);
         console.log(allGames);
-
       }, [day, month, year]);
 
     useEffect(() => {
         if (formattedDate) {
-            const gamesForThisDate = gameDictionary.get(formattedDate) || [];
-            console.log('Games for this date:', gamesForThisDate);  // Check the structure here
+            const gamesForThisDate = gameDictionary.get(formattedDate) || new Map();
+            //console.log('Games for this date:', gamesForThisDate);  // Check the structure here
             setGamesForDate(gamesForThisDate);
         }
     }, [formattedDate]);
 
     function mapMatches() {
-        allGames.forEach(game => {
-            const matchDate = game.utcDate;
-            const [date, time] = matchDate.split("T");
-            const homeTeam = game.homeTeam
-            const awayTeam = game.awayTeam
-            if (!homeTeam || !awayTeam) return;
-            const teamsTuple = [homeTeam, awayTeam];
-            
-            if (gameDictionary.has(date)) {
-                gameDictionary.get(date).push(teamsTuple);
-            } else {
-                // Otherwise, create a new array with the first tuple
-                gameDictionary.set(date, [teamsTuple]);
+      gameDictionary.clear();
+      allGames.forEach(game => {
+          const matchDate = game.utcDate;
+          const [date, timeZ] = matchDate.split("T");
+          const timeWithMS = timeZ.split("Z")[0];
+          const time = timeWithMS.split(":")[0] + ":" + timeWithMS.split(":")[1]
+          const homeTeam = game.homeTeam;
+          const awayTeam = game.awayTeam;
+          if (!homeTeam || !awayTeam) return;
+          const teamsTuple = [homeTeam, awayTeam];
+
+          const homeScore = game.score.fullTime.home;
+          const awayScore = game.score.fullTime.away;
+
+          let display = "0`"
+          if (homeScore == null || awayScore == null){
+            if ((game.score.halfTime.home !== null) && (game.score.halfTime.away !== null)){
+              display = "HT";
             }
+          } else{
+            display = "FT";
+          }
+          
+          if (!gameDictionary.has(date)) {
+            gameDictionary.set(date, new Map());
+          }
+          const timeMap = gameDictionary.get(date);
+          if (timeMap.has(time)) {
+            timeMap.get(time).push({teamsTuple, homeScore, awayScore, display});
+          } else {
+            timeMap.set(time, [{teamsTuple, homeScore, awayScore, display}]);
+          }
         });
     }
 
@@ -60,20 +77,28 @@ function ScoreBlock({day, month, year, scheduledGames, liveGames, allGames}){
         <>
           <div className={styles["container"]}>
             <div className={styles["block"]}>
-              {gamesForDate.length > 0 ? (
-                gamesForDate.map((game, index) => {
-                  console.log('Full game object:', game); // Log the entire game object
-                  const homeTeamName = game[0].shortName ? game[0].shortName : 'Unknown Home Team';
-                  const awayTeamName = game[1].shortName ? game[1].shortName: 'Unknown Away Team';
-                  return (
-                    <Score
-                      key={index}
-                      homeTeam={homeTeamName}
-                      awayTeam={awayTeamName}
-                    />
-                  );
-                })
-              ) : (
+              {gamesForDate.size > 0 ? (
+                Array.from(gamesForDate.entries()).map(([time, games], index) => (
+                  <div key={index}>
+                    <h2>{time}</h2>
+                    {games.map((game, idx) => {
+                      console.log(game);
+                      const homeTeamName = game.teamsTuple[0].shortName || 'Unknown Home Team';
+                      const awayTeamName = game.teamsTuple[1].shortName || 'Unknown Away Team';
+                      return (
+                        <Score
+                          key={`${index}-${idx}`}
+                          homeTeam={homeTeamName}
+                          awayTeam={awayTeamName}
+                          homeScore={game.homeScore}
+                          awayScore={game.awayScore}
+                          gameTime={game.display}
+                        />
+                      );
+                    })}
+                  </div>
+                ))
+               ) : (
                 <p>No games available for this date.</p> // Display a message if no games are available
               )}
             </div>

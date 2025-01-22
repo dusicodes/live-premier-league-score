@@ -3,174 +3,192 @@
 }
 
 .card * {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
-  .card .teams {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .card .teams > span {
-    flex: 1;
-    text-align: center;
-    position: relative;
-    font-size: 13px;
-    text-wrap: nowrap;
-  }
-
-
-  .card .teams .team-name-info {
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Allow the full name to show */
-    text-overflow: ellipsis; /* Only truncate if absolutely necessary */
-    max-width: 100%; /* Remove fixed width limitation */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-  .card .teams span.progress-dots {
-    height: 3px;
-    position: relative;
-    width: 60px;
-    display: block;
-    overflow: hidden;
-    margin: 0;
-    border-radius: 10px;
-  }
-  .card .teams span.progress-dots .load {
-    background: linear-gradient(90deg, #3a3dff, #ff2929);
-    display: block;
-    height: 1.5px;
+.card .teams {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.card .teams > span {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  font-size: 13px;
+  text-wrap: nowrap;
+}
+
+
+.card .teams .team-name-info {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  max-width: 100%; 
+}
+.card .teams span.progress-dots {
+  height: 3px;
+  position: relative;
+  width: 60px;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 10px;
+}
+.card .teams span.progress-dots .load {
+  background: linear-gradient(90deg, #3a3dff, #ff2929);
+  display: block;
+  height: 1.5px;
+  width: 3px;
+  bottom: 0;
+  position: absolute;
+  transform: translateX(0px);
+  animation: loading_dots 7.5s ease both infinite;
+}
+@keyframes loading_dots {
+  0% {
     width: 3px;
-    bottom: 0;
-    position: absolute;
     transform: translateX(0px);
-    animation: loading_dots 7.5s ease both infinite;
   }
-  @keyframes loading_dots {
-    0% {
-      width: 3px;
-      transform: translateX(0px);
-    }
-    40% {
-      width: 3px;
-      transform: translateX(57px);
-    }
-  
-    75% {
-      width: 100%;
-      transform: translateX(0px);
-    }
-    100% {
-      width: 3px;
-      transform: translateX(0px);
-    }
-  }
-  .card .teams .team-home,
-  .card .teams .team-away {
-    flex: 1;
-    display: flex;
-    justify-content: center; 
-    text-align: center;
+  40% {
+    width: 3px;
+    transform: translateX(57px);
   }
 
-
-
-  .card .teams .team-home::after {
-    position: absolute;
-    top: -3px;
-    content: "";
-    height: 23px;
-    border-radius: 27px;
-    left: -20px;
-    filter: blur(2px);
-    transform: rotate(208deg);
-    width: 20px;
-  }
-  .card .teams .team-home::before {
-    position: absolute;
-    bottom: -15px;
-    content: "";
-    height: 17px;
-    border-radius: 80px;
-    right: 0;
-    filter: blur(1px);
-    transform: translate(-50%, 0%);
-    width: 80%;
-  }
-  .card .teams .team-away::after {
-    position: absolute;
-    top: -3px;
-    content: "";
-    height: 23px;
-    border-radius: 27px;
-    right: -20px;
-    filter: blur(2px);
-    transform: rotate(208deg);
-    width: 20px;
-  }
-  .card .teams .team-away::before {
-    position: absolute;
-    bottom: -15px;
-    content: "";
-    height: 17px;
-    border-radius: 80px;
-    left: 0;
-    filter: blur(1px);
-    transform: translate(50%, 0%);
-    width: 80%;
-  }
-  
-
-  
-  .event-info-banner .info-heading {
-    position: absolute;
-    right: 12px;
-    bottom: 5px;
-    color: rgba(255, 255, 255, 0.2);
-    margin: 0;
-  }
-  .card .event-scoreboard .event-score-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 10px;
-    border-radius: 10px;
-    width: fit-content;
-    background: linear-gradient(#1e1e1e 0%, #0c0c0c8e 4%, #1a1419);
-    box-shadow:
-      inset 0 0 1px 0 #2c2c2c,
-      0 0 20px 0 #1313139c;
-    font-size: 30px;
-    margin: 10px;
-    width: 80%;
-  }
-  .card .event-scoreboard .event-score-container .score-container {
-    font-size: 24px;
-    background: linear-gradient(90deg, #3a3dff, #ff2929);
-    -webkit-background-clip: text;
+  75% {
     width: 100%;
-    -webkit-text-fill-color: transparent;
+    transform: translateX(0px);
   }
-  
-  .card .event-scoreboard .event-score-container .current-time-container {
-    font-size: 12px;
-    margin-bottom: 8px;
-    width: 100%;
-    font-family: "SegoeUI";
-    color: #a1a1a1;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 5px;
+  100% {
+    width: 3px;
+    transform: translateX(0px);
   }
-  .card
-    .event-scoreboard
-    .event-score-container
-    .current-time-container
-    .event-clock {
-    font-weight: 500;
-    color: #eee;
-  }
-  
+}
+.card .teams .team-home,
+.card .teams .team-away {
+  flex: 1;
+  display: flex;
+  justify-content: center; 
+  text-align: center;
+}
+
+.card .teams .team-home::after {
+  position: absolute;
+  top: -3px;
+  content: "";
+  height: 23px;
+  border-radius: 27px;
+  left: -20px;
+  filter: blur(2px);
+  transform: rotate(208deg);
+  width: 20px;
+}
+.card .teams .team-home::before {
+  position: absolute;
+  bottom: -15px;
+  content: "";
+  height: 17px;
+  border-radius: 80px;
+  right: 0;
+  filter: blur(1px);
+  transform: translate(-50%, 0%);
+  width: 80%;
+}
+.card .teams .team-away::after {
+  position: absolute;
+  top: -3px;
+  content: "";
+  height: 23px;
+  border-radius: 27px;
+  right: -20px;
+  filter: blur(2px);
+  transform: rotate(208deg);
+  width: 20px;
+}
+.card .teams .team-away::before {
+  position: absolute;
+  bottom: -15px;
+  content: "";
+  height: 17px;
+  border-radius: 80px;
+  left: 0;
+  filter: blur(1px);
+  transform: translate(50%, 0%);
+  width: 80%;
+}
+
+
+
+.event-info-banner .info-heading {
+  position: absolute;
+  right: 12px;
+  bottom: 5px;
+  color: rgba(255, 255, 255, 0.2);
+  margin: 0;
+}
+.card .event-scoreboard .event-score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-radius: 10px;
+  width: fit-content;
+  background: linear-gradient(#1e1e1e 0%, #0c0c0c8e 4%, #1a1419);
+  box-shadow:
+    inset 0 0 1px 0 #2c2c2c,
+    0 0 20px 0 #1313139c;
+  font-size: 30px;
+  margin: 10px;
+  width: 80%;
+}
+.card .event-scoreboard .event-score-container .score-container {
+  font-size: 24px;
+  background: linear-gradient(90deg, #3a3dff, #ff2929);
+  -webkit-background-clip: text;
+  width: 100%;
+  -webkit-text-fill-color: transparent;
+}
+
+.card .event-scoreboard .event-score-container .current-time-container {
+  font-size: 12px;
+  margin-bottom: 8px;
+  width: 100%;
+  font-family: "SegoeUI";
+  color: #a1a1a1;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+}
+.card
+.event-scoreboard
+.event-score-container
+.current-time-container
+.event-clock {
+  font-weight: 500;
+  color: #eee;
+}
+
+.team-logo {
+  width: 50px; 
+  height: auto;
+  margin-bottom: 5px;
+  object-fit: contain;
+}
+
+.team-info-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.team-name-info {
+  font-size: 14px; 
+  font-weight: bold;
+  color: #333; 
+}
