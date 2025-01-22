@@ -1,8 +1,8 @@
 import styles from './DatePicker.module.css';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 
 
-function DatePicker(){
+function DatePicker({onDateChange}){
 
     const [currentSelection, setCurrentSelection] = useState();
     const [currentDayElement, setCurrentDayElement] = useState()
@@ -21,6 +21,11 @@ function DatePicker(){
     const [selectedYear, setSelectedYear] = useState('');
     
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    const leftInterval = useRef(null);
+    const rightInterval = useRef(null);
+    const initialDelayTimeoutRef = useRef(null);
+
   
     function findDaysInMonth(month, year){
         return new Date(year, month, 0).getDate();
@@ -36,6 +41,7 @@ function DatePicker(){
         setCurrentMonth(today.getMonth() + 1);
         setCurrentYear(today.getFullYear());
 
+        setSelectedDay(currentDay);
         setSelectedMonth(currentMonth);
         setSelectedYear(currentYear);
 
@@ -81,7 +87,12 @@ function DatePicker(){
         setDayDates([...prevDayDates.reverse(), currentDay, ...nextDayDates]);
         setMonthDates([...prevMonthDates, currentMonth, ...nextMonthDates]);
         setYearDates([...prevYearDates, currentYear, ...nextYearDates]);
+
     }, [currentDay, currentMonth, currentYear]);
+
+    useEffect(() => {
+        onDateChange?.(selectedDay, selectedMonth, selectedYear)
+    }, [selectedDay, selectedMonth, selectedYear]);
 
     function makeCurrentDay(newSelection, day, month, year){
 
@@ -96,11 +107,11 @@ function DatePicker(){
         setSelectedYear(year);
     }
 
-    useEffect(() => {
-        console.log(dayDates);
-        console.log(monthDates);
-        console.log(yearDates);
-    }, [selectedDay, selectedMonth, selectedYear]);
+    // useEffect(() => {
+    //     console.log(dayDates);
+    //     console.log(monthDates);
+    //     console.log(yearDates);
+    // }, [selectedDay, selectedMonth, selectedYear]);
 
     
     function leftArrowPress() {
@@ -181,56 +192,32 @@ function DatePicker(){
         makeCurrentDay(newSelection, dayDates[newId], monthDates[newId], yearDates[newId]);
     }
 
+
     return(
         <>
         <div className={styles["header"]}>
             <h3>{months[selectedMonth - 1]} {selectedYear}</h3><br></br>
         </div>
-        <div className={styles["date-picker"]}>
-            <button className={styles["arrow-left"]} onClick={leftArrowPress}>&lt;</button>
+            <div className={styles["date-picker"]}>
+                <button className={styles["arrow-left"]} onClick={leftArrowPress}>&lt;
+                </button>
             <div className={styles["dates"]}>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('0'), dayDates[0], monthDates[0], yearDates[0])} id='0'>
-                    <button>{dayDates[0]}</button>
+                
+             {dayDates.map((dayDate, index) => (
+                <div key={index}
+                className={`${styles["date-item"]} ${index === 6 ? `${styles["today"]} ${styles["current-selection"]}` : ""}`}
+                onClick={() => makeCurrentDay(document.getElementById(index.toString()), dayDates[index], monthDates[index], yearDates[index]
+                )}
+                id={index.toString()}
+                >
+                    <button>{dayDate}</button>
                 </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('1'), dayDates[1], monthDates[1], yearDates[1])} id='1'>
-                    <button>{dayDates[1]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('2'), dayDates[2], monthDates[2], yearDates[2])} id='2'>
-                    <button>{dayDates[2]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('3'), dayDates[3], monthDates[3], yearDates[3])} id='3'>
-                    <button>{dayDates[3]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('4'), dayDates[4], monthDates[4], yearDates[4])} id='4'>
-                    <button>{dayDates[4]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('5'), dayDates[5], monthDates[5], yearDates[5])} id='5'>
-                    <button>{dayDates[5]}</button>
-                </div>
-                <div className={`${styles["date-item"]} ${styles["today"]} ${styles["current-selection"]}`} onClick={() => makeCurrentDay(document.getElementById('6'), dayDates[6], monthDates[6], yearDates[6])} id='6'>
-                    <button>{dayDates[6]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('7'), dayDates[7], monthDates[7], yearDates[7])} id='7'>
-                    <button>{dayDates[7]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('8'), dayDates[8], monthDates[8], yearDates[8])} id='8'>
-                    <button>{dayDates[8]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('9'), dayDates[9], monthDates[9], yearDates[9])} id='9'>
-                    <button>{dayDates[9]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('10'), dayDates[10], monthDates[10], yearDates[10])} id='10'>
-                    <button>{dayDates[10]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('11'), dayDates[11], monthDates[11], yearDates[11])} id='11'>
-                    <button>{dayDates[11]}</button>
-                </div>
-                <div className={styles["date-item"]} onClick={() => makeCurrentDay(document.getElementById('12'), dayDates[12], monthDates[12], yearDates[12])} id='12'>
-                    <button>{dayDates[12]}</button>
-                </div>
+             ))}
+
             </div>
-            <button className={styles["arrow-right"]} onClick={rightArrowPress}>&gt;</button>
-        </div>
+                <button className={styles["arrow-right"]} onClick={rightArrowPress}>&gt;
+                </button>
+            </div>
         </>
     );
 

@@ -4,56 +4,81 @@ import styles from "./ScoreBlock.module.css"
 import axios from 'axios';
 
 
-function ScoreBlock(){
+function ScoreBlock({day, month, year, scheduledGames, liveGames, allGames}){
 
-    const API_TOKEN = import.meta.env.VITE_REACT_APP_API_KEY;
+    let gameDictionary = new Map();
+    const [formattedDate, setFormattedDate] = useState('');
+    const [gamesForDate, setGamesForDate] = useState([]);
     
-    async function getPremierLeagueData(dataType) {
-        const url = `https://thingproxy.freeboard.io/fetch/https://api.football-data.org/v4/competitions/PL/${dataType}`; // have to use a proxy to avoid some protocol...
-        try {
-          const response = await axios.get(url, {
-            headers: {
-              'X-Auth-Token': API_TOKEN
-            }
-          });
-
-          console.log(`Full ${dataType} Response:`, response.data);  // Log full response to inspect
-
-          if (dataType.includes('matches?status=LIVE')) {
-            const liveMatches = response.data.matches;
-            liveMatches.forEach(match => {
-                const homeTeam = match.homeTeam.name;
-                const awayTeam = match.awayTeam.name;
-                const homeScore = match.score.fullTime.homeTeam;
-                const awayScore = match.score.fullTime.awayTeam;
-
-                console.log(`${homeTeam} vs ${awayTeam}: ${homeScore} - ${awayScore}`);
-            });
-          }
-      } catch (error) {
-          console.error('Error fetching data:', error.response ? error.response.data : error);
+    mapMatches();
+    useEffect(() => {
+        if (day && month && year) {
+          const formatted = formatDate(day, month, year);
+          setFormattedDate(formatted);
         }
-      }
+        console.log(scheduledGames);
+        console.log(liveGames);
+        console.log(allGames);
 
-      useEffect(() => {
-        getPremierLeagueData('standings');
-        getPremierLeagueData(encodeURIComponent('matches?status=SCHEDULED'))
-        getPremierLeagueData('matches?status=LIVE'); 
-        //getPremierLeagueData(encodeURIComponent('matches'))
+      }, [day, month, year]);
 
-      }, []);
+    useEffect(() => {
+        if (formattedDate) {
+            const gamesForThisDate = gameDictionary.get(formattedDate) || [];
+            console.log('Games for this date:', gamesForThisDate);  // Check the structure here
+            setGamesForDate(gamesForThisDate);
+        }
+    }, [formattedDate]);
 
-      
+    function mapMatches() {
+        allGames.forEach(game => {
+            const matchDate = game.utcDate;
+            const [date, time] = matchDate.split("T");
+            const homeTeam = game.homeTeam
+            const awayTeam = game.awayTeam
+            if (!homeTeam || !awayTeam) return;
+            const teamsTuple = [homeTeam, awayTeam];
+            
+            if (gameDictionary.has(date)) {
+                gameDictionary.get(date).push(teamsTuple);
+            } else {
+                // Otherwise, create a new array with the first tuple
+                gameDictionary.set(date, [teamsTuple]);
+            }
+        });
+    }
+
+    function formatDate(day, month, year) {
+        const formattedDay = day < 10 ? `0${day}` : `${day}`;
+        const formattedMonth = month < 10 ? `0${month}` : `${month}`;
     
-    return(
-        <>
-        <div className={styles["container"]}>
-            <div className={styles["block"]}>
-                <Score></Score>
-            </div>
-        </div>
-        </>
-    );
-}
+        return `${year}-${formattedMonth}-${formattedDay}`;
+    }
 
+  
+    return (
+        <>
+          <div className={styles["container"]}>
+            <div className={styles["block"]}>
+              {gamesForDate.length > 0 ? (
+                gamesForDate.map((game, index) => {
+                  console.log('Full game object:', game); // Log the entire game object
+                  const homeTeamName = game[0].shortName ? game[0].shortName : 'Unknown Home Team';
+                  const awayTeamName = game[1].shortName ? game[1].shortName: 'Unknown Away Team';
+                  return (
+                    <Score
+                      key={index}
+                      homeTeam={homeTeamName}
+                      awayTeam={awayTeamName}
+                    />
+                  );
+                })
+              ) : (
+                <p>No games available for this date.</p> // Display a message if no games are available
+              )}
+            </div>
+          </div>
+        </>
+      );
+}
 export default ScoreBlock;

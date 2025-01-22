@@ -1,13 +1,13 @@
 
 import styles from './Score.module.css';
 
-function Score(props) {
+function Score({homeTeam, awayTeam}) {
     return (
         <div className={styles.card}>
             <div data-status="inprogress" className={styles.teams}>
                 <span className={`${styles['team-info']} ${styles['team-home']}`}>
                     <span className={styles['team-info-container']}>
-                        <span className={styles['team-name-info']}>Manchester United</span>
+                        <span className={styles['team-name-info']}>{homeTeam}</span>
                     </span>
                 </span>
                 <span className={styles['event-scoreboard']}>
@@ -30,7 +30,7 @@ function Score(props) {
                 <span className={`${styles['team-info']} ${styles['team-away']}`}>
                     <span className={styles['team-info-container']}>
                         <span className={styles['team-icon-container']}></span>
-                        <span className={styles['team-name-info']}>Chelsea</span>
+                        <span className={styles['team-name-info']}>{awayTeam}</span>
                     </span>
                 </span>
             </div>
