@@ -1,22 +1,23 @@
-body{
+body {
   margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 .header-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: hsl(207, 94%, 53%);
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100vw;
-    height: 13vh;
-    box-sizing: border-box;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: hsl(207, 94%, 53%);
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 13vh;
+  box-sizing: border-box;
+}
+
 .home-button {
-  background-image: url('../assets/logo.png');
+  background-image: url("../assets/logo.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -29,8 +30,8 @@ body{
   aspect-ratio: 1;
 }
 
-.account-button{
-  background-image: url('../assets/profile.png');
+.account-button {
+  background-image: url("../assets/profile.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -54,10 +55,10 @@ body{
   height: 50%;
   max-width: 30vw;
   box-sizing: border-box;
-  padding: 0 1vw; 
-  }
+  padding: 0 1vw;
+}
 
-    /* For tablets */
+/* For tablets */
 @media (max-width: 768px) {
   .search-bar {
     font-size: 14px; /* Smaller font size on smaller screens */
@@ -73,13 +74,13 @@ body{
   }
 }
 
-.search-container:focus-within{
+.search-container:focus-within {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
 }
 
 .search-input {
   font-size: 1rem;
-  font-family: 'Lexend', sans-serif;
+  font-family: "Lexend", sans-serif;
   color: #333333;
   outline: none;
   border: none;
@@ -91,13 +92,14 @@ body{
 
 .search-input::placeholder {
   color: rgba(0, 0, 0, 0.25);
+  font-size: large;
 }
 
-.navbar{
+.navbar {
   margin-left: 4vw;
 }
 
-.navbar ul{
+.navbar ul {
   list-style-type: none;
   background-color: transparent;
   padding: 0px;
@@ -105,7 +107,7 @@ body{
   overflow: hidden;
 }
 
-.navbar a{
+.navbar a {
   color: white;
   text-decoration: none;
   font-size: 1.3rem;
@@ -114,6 +116,6 @@ body{
   text-align: center;
 }
 
-.navbar li{
+.navbar li {
   float: left;
 }
